@@ -15,6 +15,9 @@ import AdminRoute from "./AdminRoute";
 import ManageItems from "../pages/dashboard/manageItems/ManageItems";
 import UpdateItem from "../pages/dashboard/updateItem/UpdateItem";
 import Payment from "../pages/dashboard/payment/Payment";
+import PaymentHistory from "../pages/dashboardUser/paymentHistory/PaymentHistory";
+import UserHome from "../pages/dashboard/UserHome/UserHome";
+import AdminHome from "../pages/dashboard/AdminHome/AdminHome";
 
 const router = createBrowserRouter([
   {
@@ -55,16 +58,36 @@ const router = createBrowserRouter([
     element:
       <Dashboard></Dashboard>,
     children: [
-      // normal user
 
+      // normal user
+      {
+        path: 'userHome',
+        element: <UserHome></UserHome>
+      },
       {
         path: 'carts',
         element: <PrivateRoute>
           <Cart></Cart>
         </PrivateRoute>
       },
+      {
+        path: 'payment',
+        element:
+          <Payment></Payment>
+
+      },
+      {
+        path: 'paymentHistory',
+        element: <PaymentHistory></PaymentHistory>
+      },
 
       // admin pannel
+      {
+        path: 'adminHome',
+        element: <AdminRoute>
+          <AdminHome></AdminHome>
+        </AdminRoute>
+      },
       {
         path: 'addItems',
         element: <AdminRoute>
@@ -89,14 +112,9 @@ const router = createBrowserRouter([
         element: <AdminRoute>
           <UpdateItem></UpdateItem>
         </AdminRoute>,
-        loader: ({params}) => fetch(`http://localhost:5100/menu/${params.id}`)
-      },
-      {
-        path: 'payment',
-        element: <AdminRoute>
-          <Payment></Payment>
-        </AdminRoute>
+        loader: ({ params }) => fetch(`https://bistro-boss-server-tan-six.vercel.app/menu/${params.id}`)
       }
+
     ]
 
   },
